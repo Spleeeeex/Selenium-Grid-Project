@@ -1,5 +1,6 @@
 package com.tusur;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -23,27 +24,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Story("Проверка известных проблем")
 public class BugsTests extends BaseTest {
 
+    @BeforeEach
+    void openTestPage() {
+        driver.get("https://do.tusur.ru/qa-test2/");
+        System.out.println("Открыта вкладка для теста: " + driver.getWindowHandle());
+    }
+
     @Test
     @Description("Тест проверяет двойное нажатие по кнопке 'Очистить'")
     @Severity(SeverityLevel.MINOR)
     public void testDoubleClickToClean() {
         try {
-
-        // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
-
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Нажимаем кнопку очистки
-        getDriver().findElement(By.name("reset")).click();
+        driver.findElement(By.name("reset")).click();
         // Дублируем нажатие
-        getDriver().findElement(By.name("reset")).click();
+        driver.findElement(By.name("reset")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Кнопка «Очистить поля» при всех пустых полях заполняет нулями')]")
         ));
 
@@ -62,23 +65,23 @@ public class BugsTests extends BaseTest {
         try{
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("10");
-        getDriver().findElement(By.name("b")).sendKeys("6,5");
-        getDriver().findElement(By.name("c")).sendKeys("7");
+        driver.findElement(By.name("a")).sendKeys("10");
+        driver.findElement(By.name("b")).sendKeys("6,5");
+        driver.findElement(By.name("c")).sendKeys("7");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Поле ВC принимает вещественные числа')]")
         ));
 
@@ -97,23 +100,23 @@ public class BugsTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("1");
-        getDriver().findElement(By.name("b")).sendKeys("2");
-        getDriver().findElement(By.name("c")).sendKeys("99");
+        driver.findElement(By.name("a")).sendKeys("1");
+        driver.findElement(By.name("b")).sendKeys("2");
+        driver.findElement(By.name("c")).sendKeys("99");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Поле AС имеет диапазон от 1 до 99')]")
         ));
 
@@ -132,23 +135,23 @@ public class BugsTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("1");
-        getDriver().findElement(By.name("b")).sendKeys("1");
-        getDriver().findElement(By.name("c")).sendKeys("");
+        driver.findElement(By.name("a")).sendKeys("1");
+        driver.findElement(By.name("b")).sendKeys("1");
+        driver.findElement(By.name("c")).sendKeys("");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Поле AС не проверяется на заполненность')]")
         ));
 

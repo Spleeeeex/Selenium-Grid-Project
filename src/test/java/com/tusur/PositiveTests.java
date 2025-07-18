@@ -30,23 +30,23 @@ public class PositiveTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("3");
-        getDriver().findElement(By.name("b")).sendKeys("4");
-        getDriver().findElement(By.name("c")).sendKeys("5");
+        driver.findElement(By.name("a")).sendKeys("3");
+        driver.findElement(By.name("b")).sendKeys("4");
+        driver.findElement(By.name("c")).sendKeys("5");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-         WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+         WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                  By.xpath("//li[contains(., 'Прямоугольный треугольник')]")
          ));
 
@@ -65,23 +65,23 @@ public class PositiveTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("5");
-        getDriver().findElement(By.name("b")).sendKeys("5");
-        getDriver().findElement(By.name("c")).sendKeys("5");
+        driver.findElement(By.name("a")).sendKeys("5");
+        driver.findElement(By.name("b")).sendKeys("5");
+        driver.findElement(By.name("c")).sendKeys("5");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Равносторонний треугольник')]")
         ));
 
@@ -100,23 +100,23 @@ public class PositiveTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("3");
-        getDriver().findElement(By.name("b")).sendKeys("3");
-        getDriver().findElement(By.name("c")).sendKeys("5");
+        driver.findElement(By.name("a")).sendKeys("3");
+        driver.findElement(By.name("b")).sendKeys("3");
+        driver.findElement(By.name("c")).sendKeys("5");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Равнобедренный треугольник')]")
         ));
 
@@ -135,23 +135,23 @@ public class PositiveTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("6");
-        getDriver().findElement(By.name("b")).sendKeys("7");
-        getDriver().findElement(By.name("c")).sendKeys("5");
+        driver.findElement(By.name("a")).sendKeys("6");
+        driver.findElement(By.name("b")).sendKeys("7");
+        driver.findElement(By.name("c")).sendKeys("5");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Остроугольный треугольник')]")
         ));
 
@@ -170,23 +170,23 @@ public class PositiveTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("10");
-        getDriver().findElement(By.name("b")).sendKeys("7");
-        getDriver().findElement(By.name("c")).sendKeys("5");
+        driver.findElement(By.name("a")).sendKeys("10");
+        driver.findElement(By.name("b")).sendKeys("7");
+        driver.findElement(By.name("c")).sendKeys("5");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Тупоугольный треугольник')]")
         ));
 

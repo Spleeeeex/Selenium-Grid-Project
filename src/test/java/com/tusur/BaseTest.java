@@ -24,32 +24,35 @@ import java.util.Date;
 public class BaseTest {
     private static final String GRID_URL = "http://localhost:4444";
 
-    // ThreadLocal для хранения драйверов и ожиданий
-    protected ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
-    protected ThreadLocal<WebDriverWait> waitThreadLocal = new ThreadLocal<>();
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+    protected String mainWindowHandle;
 
-    protected WebDriver getDriver() {
-        return driverThreadLocal.get();
-    }
-    protected WebDriverWait getWait() {
-        return waitThreadLocal.get();
+    @BeforeAll
+    public void setupDriver(TestInfo testInfo) throws MalformedURLException {
+        // Определяем, какой браузер использовать на основе тегов теста
+        if (testInfo.getTags().contains("chrome")) {
+            driver = createChromeDriver();
+        } else if (testInfo.getTags().contains("firefox")) {
+            driver = createFirefoxDriver();
+        }
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        System.out.printf("[%s] Инициализирован драйвер для класса: %s тип браузера: %s%n",
+                Thread.currentThread().getName(),
+                this.getClass().getSimpleName(),
+                testInfo.getTags());
     }
 
     @BeforeEach
-    public void setup(TestInfo testInfo) throws MalformedURLException {
+    public void setupTest(TestInfo testInfo) {
+        // Создаем новую вкладку для теста
+        driver.switchTo().newWindow(WindowType.TAB);
+        driver.get("https://do.tusur.ru/qa-test2/");
 
-        // Определяем, какой браузер использовать на основе тегов теста
-        if (testInfo.getTags().contains("chrome")) {
-            driverThreadLocal.set(createChromeDriver());
-        } else if (testInfo.getTags().contains("firefox")) {
-            driverThreadLocal.set(createFirefoxDriver());
-        }
-        waitThreadLocal.set(new WebDriverWait(getDriver(), Duration.ofSeconds(5)));
-
-        System.out.printf("[%s] Начат тест: %s тип браузера: %s%n",
+        System.out.printf("[%s] Начат тест: %s в новой вкладке%n",
                 Thread.currentThread().getName(),
-                testInfo.getDisplayName(),
-                testInfo.getTags());
+                testInfo.getDisplayName());
     }
 
     private WebDriver createChromeDriver() throws MalformedURLException {
@@ -64,60 +67,66 @@ public class BaseTest {
 
     @BeforeEach
     public void slowDown() throws InterruptedException {
-        // Добавляем задержку перед каждым тестом (2 секунды)
-        Thread.sleep(2000);
+        // Добавляем задержку перед каждым тестом (5 секунд)
+        Thread.sleep(5000);
     }
 
     @AfterEach
     public void afterTest(TestInfo testInfo) {
         try {
-            // Создаем уникальное имя файла
-            String timestamp = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date());
-            String browserType = testInfo.getTags().contains("chrome") ? "chrome" : "firefox";
+            // Создаем скриншот
+            takeScreenshot(testInfo);
 
-            // Правильный путь с вложенными папками
-            String screenshotsDir = "target" + File.separator + "screenshots" + File.separator + browserType + File.separator;
-            String screenshotPath = screenshotsDir + File.separator + "test_" + timestamp + ".png";
+            // Закрываем текущую вкладку (тестовую)
+            driver.close();
 
-            // Создаем все необходимые папки
-            new File(screenshotsDir);
-
-            // Создаем и сохраняем скриншоты
-            File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File(screenshotPath));
-
-            // Прикрепляем скриншоты к Allure отчету
-            try (FileInputStream fis = new FileInputStream(screenshot)) {
-                Allure.addAttachment("Скриншот после теста", "image/png", fis, ".png");
-            }
-
-            // Пауза 2 секунды
-            Thread.sleep(2000);
+            // Возвращаемся к оригинальному окну
+            driver.switchTo().window(mainWindowHandle);
         } catch (Exception e) {
-            System.out.println("Не удалось сделать скриншот: " + e.getMessage());
+            System.out.println("Ошибка при завершении теста: " + e.getMessage());
         }
-    }
 
-    @AfterEach
-    public void logTestEnd(TestInfo testInfo) {
         System.out.printf("[%s] Тест завершен: %s%n",
                 Thread.currentThread().getName(),
                 testInfo.getDisplayName());
     }
 
-    @AfterEach
+    private void takeScreenshot(TestInfo testInfo) {
+        try {
+            // Создаем уникальное имя файла
+            String timestamp = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date());
+            String browserType = testInfo.getTags().contains("chrome") ? "chrome" : "firefox";
+            String screenshotsDir = "target" + File.separator + "screenshots" + File.separator + browserType;
+
+            // Правильный путь с вложенными папками
+            File screenshotsFolder = new File(screenshotsDir);
+            if (!screenshotsFolder.exists() && !screenshotsFolder.mkdirs()) {
+                System.out.println("Не удалось создать директорию для скриншотов: " + screenshotsDir);
+            }
+
+            // Создаем скриншот перед закрытием вкладки
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            String screenshotPath = screenshotsDir + File.separator + "test_" + timestamp + ".png";
+            FileUtils.copyFile(screenshot, new File(screenshotPath));
+            // Прикрепляем скриншоты к Allure отчету
+            try (FileInputStream fis = new FileInputStream(screenshot)) {
+                Allure.addAttachment("Скриншот после теста " + testInfo.getDisplayName(), "image/png", fis, ".png");
+            }
+        } catch (Exception e) {
+            System.out.println("Не удалось сделать скриншот - окно уже закрыто: " + e.getMessage());
+        }
+    }
+
+    @AfterAll
     public void tearDownDriver() {
-        if (getDriver() != null) {
+        if (driver != null) {
             try {
                 // Добавляем задержку 15 секунд перед закрытием
                 Thread.sleep(15000);
-                getDriver().quit();
-                System.out.println("Драйвер успешно закрыт для потока: " + Thread.currentThread().getName());
+                driver.quit();
+                System.out.println("Драйвер успешно закрыт для класса: " + this.getClass().getSimpleName());
             } catch (Exception e) {
                 System.out.println("Ошибка при закрытии драйвера: " + e.getMessage());
-            } finally {
-                driverThreadLocal.remove();
-                waitThreadLocal.remove();
             }
         }
     }

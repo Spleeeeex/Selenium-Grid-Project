@@ -30,23 +30,23 @@ public class NegativeTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("125");
-        getDriver().findElement(By.name("b")).sendKeys("125");
-        getDriver().findElement(By.name("c")).sendKeys("125");
+        driver.findElement(By.name("a")).sendKeys("125");
+        driver.findElement(By.name("b")).sendKeys("125");
+        driver.findElement(By.name("c")).sendKeys("125");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//div[@class='text-danger' and contains(., 'Стороны могут иметь длину от 1 до 100')]")
         ));
 
@@ -65,23 +65,23 @@ public class NegativeTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("10");
-        getDriver().findElement(By.name("b")).sendKeys("7");
-        getDriver().findElement(By.name("c")).sendKeys("6,5");
+        driver.findElement(By.name("a")).sendKeys("10");
+        driver.findElement(By.name("b")).sendKeys("7");
+        driver.findElement(By.name("c")).sendKeys("6,5");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Вещественные значения')]")
         ));
 
@@ -100,23 +100,23 @@ public class NegativeTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("1");
-        getDriver().findElement(By.name("b")).sendKeys("1");
-        getDriver().findElement(By.name("c")).sendKeys("1");
+        driver.findElement(By.name("a")).sendKeys("1");
+        driver.findElement(By.name("b")).sendKeys("1");
+        driver.findElement(By.name("c")).sendKeys("1");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Граничные значения')]")
         ));
 
@@ -135,23 +135,23 @@ public class NegativeTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("");
-        getDriver().findElement(By.name("b")).sendKeys("1");
-        getDriver().findElement(By.name("c")).sendKeys("1");
+        driver.findElement(By.name("a")).sendKeys("");
+        driver.findElement(By.name("b")).sendKeys("1");
+        driver.findElement(By.name("c")).sendKeys("1");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//div[@class='text-danger' and contains(., 'Не все обязательные поля для ввода были заполнены')]")
         ));
 
@@ -170,23 +170,23 @@ public class NegativeTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("1");
-        getDriver().findElement(By.name("b")).sendKeys("1");
-        getDriver().findElement(By.name("c")).sendKeys("");
+        driver.findElement(By.name("a")).sendKeys("1");
+        driver.findElement(By.name("b")).sendKeys("1");
+        driver.findElement(By.name("c")).sendKeys("");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Одно поле пустое')]")
         ));
 
@@ -205,23 +205,23 @@ public class NegativeTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("1");
-        getDriver().findElement(By.name("b")).sendKeys("2");
-        getDriver().findElement(By.name("c")).sendKeys("5");
+        driver.findElement(By.name("a")).sendKeys("1");
+        driver.findElement(By.name("b")).sendKeys("2");
+        driver.findElement(By.name("c")).sendKeys("5");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Не выполнилось условие треугольника')]")
         ));
 
@@ -240,23 +240,23 @@ public class NegativeTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("10");
-        getDriver().findElement(By.name("b")).sendKeys("7");
-        getDriver().findElement(By.name("c")).sendKeys("A");
+        driver.findElement(By.name("a")).sendKeys("10");
+        driver.findElement(By.name("b")).sendKeys("7");
+        driver.findElement(By.name("c")).sendKeys("A");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Нечисловые значения')]")
         ));
 
@@ -275,23 +275,23 @@ public class NegativeTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("1");
-        getDriver().findElement(By.name("b")).sendKeys("1");
-        getDriver().findElement(By.name("c")).sendKeys("-1");
+        driver.findElement(By.name("a")).sendKeys("1");
+        driver.findElement(By.name("b")).sendKeys("1");
+        driver.findElement(By.name("c")).sendKeys("-1");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Отрицательные значения')]")
         ));
 
@@ -310,25 +310,25 @@ public class NegativeTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("1");
-        getDriver().findElement(By.name("b")).sendKeys("1");
-        getDriver().findElement(By.name("c")).sendKeys("1");
+        driver.findElement(By.name("a")).sendKeys("1");
+        driver.findElement(By.name("b")).sendKeys("1");
+        driver.findElement(By.name("c")).sendKeys("1");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
         // Нажимаем кнопку очистки
-        getDriver().findElement(By.name("reset")).click();
+        driver.findElement(By.name("reset")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Очистить поля')]")
         ));
 
@@ -347,23 +347,23 @@ public class NegativeTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("0");
-        getDriver().findElement(By.name("b")).sendKeys("1");
-        getDriver().findElement(By.name("c")).sendKeys("1");
+        driver.findElement(By.name("a")).sendKeys("0");
+        driver.findElement(By.name("b")).sendKeys("1");
+        driver.findElement(By.name("c")).sendKeys("1");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//li[contains(., 'Проверка 0')]")
         ));
 
@@ -382,23 +382,23 @@ public class NegativeTests extends BaseTest {
         try {
 
         // Открываем страницу
-        getDriver().get("https://do.tusur.ru/qa-test2/");
+        driver.get("https://do.tusur.ru/qa-test2/");
 
         // Очищаем поле (для надежности)
-        getDriver().findElement(By.name("a")).clear();
-        getDriver().findElement(By.name("b")).clear();
-        getDriver().findElement(By.name("c")).clear();
+        driver.findElement(By.name("a")).clear();
+        driver.findElement(By.name("b")).clear();
+        driver.findElement(By.name("c")).clear();
 
         // Вводим значения сторон треугольника
-        getDriver().findElement(By.name("a")).sendKeys("1");
-        getDriver().findElement(By.name("b")).sendKeys("2");
-        getDriver().findElement(By.name("c")).sendKeys("5");
+        driver.findElement(By.name("a")).sendKeys("1");
+        driver.findElement(By.name("b")).sendKeys("2");
+        driver.findElement(By.name("c")).sendKeys("5");
 
         // Нажимаем кнопку расчета
-        getDriver().findElement(By.name("calc")).click();
+        driver.findElement(By.name("calc")).click();
 
         // Ожидаем появления результата и проверяем его
-        WebElement result = getWait().until(ExpectedConditions.visibilityOfElementLocated(
+        WebElement result = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//div[@class='text-danger' and contains(., 'Треугольник не возможно построить')]")
         ));
 
