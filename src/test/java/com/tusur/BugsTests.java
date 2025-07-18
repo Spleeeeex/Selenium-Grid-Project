@@ -7,14 +7,25 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Execution(ExecutionMode.CONCURRENT)
 @Tag("chrome")
+@Epic("Проверка функционала треугольника")
+@Feature("Баг-репорты")
+@Story("Проверка известных проблем")
 public class BugsTests extends BaseTest {
 
     @Test
+    @Description("Тест проверяет двойное нажатие по кнопке 'Очистить'")
+    @Severity(SeverityLevel.MINOR)
     public void testDoubleClickToClean() {
         try {
 
@@ -39,12 +50,14 @@ public class BugsTests extends BaseTest {
         assertEquals("Кнопка «Очистить поля» при всех пустых полях заполняет нулями", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест проверяет (не)принятие полем 'BC' вещественных чисел")
+    @Severity(SeverityLevel.MINOR)
     public void testBCFieldRealNumbers() {
         try{
 
@@ -72,12 +85,14 @@ public class BugsTests extends BaseTest {
         assertEquals("Поле ВC принимает вещественные числа", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест проверяет диапазон поля 'AC'")
+    @Severity(SeverityLevel.MINOR)
     public void testACFieldRange1To99() {
         try {
 
@@ -105,12 +120,14 @@ public class BugsTests extends BaseTest {
         assertEquals("Поле AС имеет диапазон от 1 до 99", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест проверяет поле 'AC' на заполненность")
+    @Severity(SeverityLevel.MINOR)
     public void testACFieldNotCheckedForCompleteness() {
         try {
 
@@ -138,7 +155,7 @@ public class BugsTests extends BaseTest {
         assertEquals("Поле AС не проверяется на заполненность", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }

@@ -7,13 +7,25 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Execution(ExecutionMode.CONCURRENT)
 @Tag("chrome")
+@Epic("Проверка функционала треугольника")
+@Feature("Позитивные тесты")
+@Story("Проверка различных типов треугольников")
 public class PositiveTests extends BaseTest {
 
     @Test
+    @Description("Тест проверяет определение прямоугольного треугольника")
+    @Severity(SeverityLevel.NORMAL)
     public void testRightAngledTriangle() {
         try {
 
@@ -41,12 +53,14 @@ public class PositiveTests extends BaseTest {
          assertEquals("Прямоугольный треугольник", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест проверяет определение равностороннего треугольника")
+    @Severity(SeverityLevel.NORMAL)
     public void testEquilateralTriangle() {
         try {
 
@@ -74,12 +88,14 @@ public class PositiveTests extends BaseTest {
         assertEquals("Равносторонний треугольник", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест проверяет определение равнобедренного треугольника")
+    @Severity(SeverityLevel.NORMAL)
     public void testIsoscelesTriangle() {
         try {
 
@@ -107,12 +123,14 @@ public class PositiveTests extends BaseTest {
         assertEquals("Равнобедренный треугольник", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест проверяет определение остроугольного треугольника")
+    @Severity(SeverityLevel.NORMAL)
     public void testAcuteTriangle() {
         try {
 
@@ -140,12 +158,14 @@ public class PositiveTests extends BaseTest {
         assertEquals("Остроугольный треугольник", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест проверяет определение тупоугольного треугольника")
+    @Severity(SeverityLevel.NORMAL)
     public void testObtuseTriangle() {
         try {
 
@@ -173,7 +193,7 @@ public class PositiveTests extends BaseTest {
         assertEquals("Тупоугольный треугольник", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }

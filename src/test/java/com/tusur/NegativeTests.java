@@ -7,14 +7,25 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Execution(ExecutionMode.CONCURRENT)
 @Tag("firefox")
+@Epic("Проверка функционала треугольника")
+@Feature("Негативные тесты")
+@Story("Проверка обработки некорректных данных")
 public class NegativeTests extends BaseTest {
 
     @Test
+    @Description("Тест больших значений")
+    @Severity(SeverityLevel.MINOR)
     public void testLargeValues() {
         try {
 
@@ -42,12 +53,14 @@ public class NegativeTests extends BaseTest {
         assertEquals("Стороны могут иметь длину от 1 до 100", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест вещественных значений")
+    @Severity(SeverityLevel.MINOR)
     public void testRealValues() {
         try {
 
@@ -75,12 +88,14 @@ public class NegativeTests extends BaseTest {
         assertEquals("Вещественные значения", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест граничных значений")
+    @Severity(SeverityLevel.MINOR)
     public void testBoundaryValues() {
         try {
 
@@ -108,12 +123,14 @@ public class NegativeTests extends BaseTest {
         assertEquals("Граничные значения", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест проверки наличия пустого поля")
+    @Severity(SeverityLevel.MINOR)
     public void testEmptyFields() {
         try {
 
@@ -141,12 +158,14 @@ public class NegativeTests extends BaseTest {
         assertEquals("Не все обязательные поля для ввода были заполнены", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест пустого поля 'AC'")
+    @Severity(SeverityLevel.MINOR)
     public void testEmptyFields2() {
         try {
 
@@ -174,12 +193,14 @@ public class NegativeTests extends BaseTest {
         assertEquals("Одно поле пустое", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест не выполнения условия треугольника")
+    @Severity(SeverityLevel.MINOR)
     public void testNotTriangle() {
         try {
 
@@ -207,12 +228,14 @@ public class NegativeTests extends BaseTest {
         assertEquals("Не выполнилось условие треугольника", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест нечисловых значений")
+    @Severity(SeverityLevel.MINOR)
     public void testNonNumericValues() {
         try {
 
@@ -240,12 +263,14 @@ public class NegativeTests extends BaseTest {
         assertEquals("Нечисловые значения", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест отрицательных значений")
+    @Severity(SeverityLevel.MINOR)
     public void testNegativeValues() {
         try {
 
@@ -273,12 +298,14 @@ public class NegativeTests extends BaseTest {
         assertEquals("Отрицательные значения", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест очистки поля")
+    @Severity(SeverityLevel.MINOR)
     public void testCleanValues() {
         try {
 
@@ -308,12 +335,14 @@ public class NegativeTests extends BaseTest {
         assertEquals("Очистить поля", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест нулевого значения")
+    @Severity(SeverityLevel.MINOR)
     public void testZeroValues() {
         try {
 
@@ -341,12 +370,14 @@ public class NegativeTests extends BaseTest {
         assertEquals("Проверка 0", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
 
     @Test
+    @Description("Тест невозможности построения треугольника")
+    @Severity(SeverityLevel.MINOR)
     public void testItsNotTriangle() {
         try {
 
@@ -374,7 +405,7 @@ public class NegativeTests extends BaseTest {
         assertEquals("Треугольник не возможно построить", result.getText());
 
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Ошибка: " + e.getMessage());
             throw e;
         }
     }
