@@ -9,11 +9,15 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import io.qameta.allure.Allure;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Execution(ExecutionMode.CONCURRENT)
@@ -67,11 +71,25 @@ public class BaseTest {
     @AfterEach
     public void afterTest(TestInfo testInfo) {
         try {
-            // Создаем скриншот
-            File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+            // Создаем уникальное имя файла
+            String timestamp = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date());
             String browserType = testInfo.getTags().contains("chrome") ? "chrome" : "firefox";
-            FileUtils.copyFile(screenshot,
-                    new File("target/screenshots/" + browserType + "/test_" + System.currentTimeMillis() + ".png"));
+
+            // Правильный путь с вложенными папками
+            String screenshotsDir = "target" + File.separator + "screenshots" + File.separator + browserType + File.separator;
+            String screenshotPath = screenshotsDir + File.separator + "test_" + timestamp + ".png";
+
+            // Создаем все необходимые папки
+            new File(screenshotsDir);
+
+            // Создаем и сохраняем скриншоты
+            File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshot, new File(screenshotPath));
+
+            // Прикрепляем скриншоты к Allure отчету
+            try (FileInputStream fis = new FileInputStream(screenshot)) {
+                Allure.addAttachment("Скриншот после теста", "image/png", fis, ".png");
+            }
 
             // Пауза 2 секунды
             Thread.sleep(2000);
