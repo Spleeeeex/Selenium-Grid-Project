@@ -21,7 +21,7 @@ import java.util.Date;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Execution(ExecutionMode.CONCURRENT)
-public class BaseTest {
+    public class BaseTest {
     private static final String GRID_URL = "http://localhost:4444";
 
     // ThreadLocal для хранения драйверов и ожиданий
@@ -109,8 +109,8 @@ public class BaseTest {
     public void tearDownDriver() {
         if (getDriver() != null) {
             try {
-                // Добавляем задержку 15 секунд перед закрытием
-                Thread.sleep(15000);
+                // Добавляем задержку 5 секунд перед закрытием
+                Thread.sleep(5000);
                 getDriver().quit();
                 System.out.println("Драйвер успешно закрыт для потока: " + Thread.currentThread().getName());
             } catch (Exception e) {
