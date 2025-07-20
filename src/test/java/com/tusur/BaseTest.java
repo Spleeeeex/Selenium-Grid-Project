@@ -29,14 +29,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
     protected WebDriver driver;
     protected WebDriverWait wait;
-    private static int testClassCounter = 0;
 
     @BeforeAll
     public void setupDriver(TestInfo testInfo) throws MalformedURLException {
         testLock.lock();
         try {
-            testClassCounter++;
-
             // Определяем, какой браузер использовать на основе тегов теста
             if (testInfo.getTags().contains("chrome")) {
                 driver = createChromeDriver();
@@ -142,20 +139,12 @@ import java.util.concurrent.locks.ReentrantLock;
     public void tearDownDriver() {
         testLock.lock();
         try {
-            testClassCounter--;
-            boolean isLastTestClass = (testClassCounter == 0);
-
             if (driver != null) {
                 try {
                     // Добавляем задержку 3 секунды перед закрытием
                     Thread.sleep(3000);
-                    if (isLastTestClass) {
-                        System.out.println("Закрытие драйвера, так как это последний тестовый класс...");
-                        driver.quit();
-                        System.out.println("Драйвер успешно закрыт для класса: " + this.getClass().getSimpleName());
-                    } else {
-                        System.out.println("Драйвер остается открытым для следующих тестовых классов");
-                    }
+                    System.out.println("Закрытие драйвера для класса: " + this.getClass().getSimpleName());
+                    driver.quit();
                 } catch (Exception e) {
                     System.out.println("Ошибка при закрытии драйвера: " + e.getMessage());
                 }

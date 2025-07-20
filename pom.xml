@@ -139,7 +139,9 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${org.aspectj.version}/aspectjweaver-${org.aspectj.version}.jar"
                     </argLine>
                     <parallel>classes</parallel>
-                    <threadCount>16</threadCount>
+                    <threadCount>4</threadCount>
+                    <useUnlimitedThreads>false</useUnlimitedThreads>
+                    <perCoreThreadCount>false</perCoreThreadCount>
                     <groups>${includeTags}</groups>
                     <systemPropertyVariables>
                         <browser>${browser}</browser>
