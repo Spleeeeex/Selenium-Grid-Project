@@ -3,12 +3,11 @@ package com.tusur;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 import io.qameta.allure.Allure;
 
 import java.io.File;
@@ -18,41 +17,65 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Execution(ExecutionMode.CONCURRENT)
-public class BaseTest {
+    public class BaseTest {
     private static final String GRID_URL = "http://localhost:4444";
+    private static final Lock testLock = new ReentrantLock();
+    // Добавляем задержку в 3 секунды между тестами
+    private static final int DELAY_BETWEEN_TESTS_MS = 3000;
 
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected String mainWindowHandle;
+    private static int testClassCounter = 0;
 
     @BeforeAll
     public void setupDriver(TestInfo testInfo) throws MalformedURLException {
-        // Определяем, какой браузер использовать на основе тегов теста
-        if (testInfo.getTags().contains("chrome")) {
-            driver = createChromeDriver();
-        } else if (testInfo.getTags().contains("firefox")) {
-            driver = createFirefoxDriver();
-        }
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        testLock.lock();
+        try {
+            testClassCounter++;
 
-        System.out.printf("[%s] Инициализирован драйвер для класса: %s тип браузера: %s%n",
-                Thread.currentThread().getName(),
-                this.getClass().getSimpleName(),
-                testInfo.getTags());
+            // Определяем, какой браузер использовать на основе тегов теста
+            if (testInfo.getTags().contains("chrome")) {
+                driver = createChromeDriver();
+            } else if (testInfo.getTags().contains("firefox")) {
+                driver = createFirefoxDriver();
+            }
+            wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+
+            // Открываем тестовую страницу
+            driver.get("https://do.tusur.ru/qa-test2/");
+
+            System.out.printf("[%s] Инициализирован драйвер для класса: %s тип браузера: %s%n",
+                    Thread.currentThread().getName(),
+                    this.getClass().getSimpleName(),
+                    testInfo.getTags());
+
+            // Начальная задержка после открытия браузера
+            safeSleep(2000);
+        } finally {
+            testLock.unlock();
+        }
     }
 
     @BeforeEach
     public void setupTest(TestInfo testInfo) {
-        // Создаем новую вкладку для теста
-        driver.switchTo().newWindow(WindowType.TAB);
-        driver.get("https://do.tusur.ru/qa-test2/");
+        testLock.lock();
+        try {
+            // Ожидание готовности страницы
+            wait.until(ExpectedConditions.jsReturnsValue("return document.readyState === 'complete'"));
 
-        System.out.printf("[%s] Начат тест: %s в новой вкладке%n",
-                Thread.currentThread().getName(),
-                testInfo.getDisplayName());
+            System.out.printf("[%s] Начат тест: %s в новой вкладке%n",
+                    Thread.currentThread().getName(),
+                    testInfo.getDisplayName());
+
+            // Задержка перед началом теста
+            safeSleep(2000);
+        } finally {
+            testLock.unlock();
+        }
     }
 
     private WebDriver createChromeDriver() throws MalformedURLException {
@@ -65,30 +88,28 @@ public class BaseTest {
         return new RemoteWebDriver(new URL(GRID_URL), options);
     }
 
-    @BeforeEach
-    public void slowDown() throws InterruptedException {
-        // Добавляем задержку перед каждым тестом (5 секунд)
-        Thread.sleep(5000);
-    }
-
     @AfterEach
     public void afterTest(TestInfo testInfo) {
+        testLock.lock();
         try {
-            // Создаем скриншот
-            takeScreenshot(testInfo);
+            try {
+                // Создаем скриншот
+                takeScreenshot(testInfo);
+                // Ожидание готовности страницы
+                wait.until(ExpectedConditions.jsReturnsValue("return document.readyState === 'complete'"));
 
-            // Закрываем текущую вкладку (тестовую)
-            driver.close();
+                System.out.printf("[%s] Тест завершен: %s%n",
+                        Thread.currentThread().getName(),
+                        testInfo.getDisplayName());
 
-            // Возвращаемся к оригинальному окну
-            driver.switchTo().window(mainWindowHandle);
-        } catch (Exception e) {
-            System.out.println("Ошибка при завершении теста: " + e.getMessage());
+                // Задержка между тестами
+                safeSleep(DELAY_BETWEEN_TESTS_MS);
+            } catch (Exception e) {
+                System.out.println("Ошибка при завершении теста: " + e.getMessage());
+            }
+        } finally {
+            testLock.lock();
         }
-
-        System.out.printf("[%s] Тест завершен: %s%n",
-                Thread.currentThread().getName(),
-                testInfo.getDisplayName());
     }
 
     private void takeScreenshot(TestInfo testInfo) {
@@ -119,15 +140,38 @@ public class BaseTest {
 
     @AfterAll
     public void tearDownDriver() {
-        if (driver != null) {
-            try {
-                // Добавляем задержку 15 секунд перед закрытием
-                Thread.sleep(15000);
-                driver.quit();
-                System.out.println("Драйвер успешно закрыт для класса: " + this.getClass().getSimpleName());
-            } catch (Exception e) {
-                System.out.println("Ошибка при закрытии драйвера: " + e.getMessage());
+        testLock.lock();
+        try {
+            testClassCounter--;
+            boolean isLastTestClass = (testClassCounter == 0);
+
+            if (driver != null) {
+                try {
+                    // Добавляем задержку 3 секунды перед закрытием
+                    Thread.sleep(3000);
+                    if (isLastTestClass) {
+                        System.out.println("Закрытие драйвера, так как это последний тестовый класс...");
+                        driver.quit();
+                        System.out.println("Драйвер успешно закрыт для класса: " + this.getClass().getSimpleName());
+                    } else {
+                        System.out.println("Драйвер остается открытым для следующих тестовых классов");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Ошибка при закрытии драйвера: " + e.getMessage());
+                }
             }
+        } finally {
+            testLock.unlock();
+        }
+    }
+
+    // Вспомогательный метод для безопасной задержки
+    private void safeSleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Задержка была прервана: " + e.getMessage());
         }
     }
 }

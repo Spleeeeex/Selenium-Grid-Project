@@ -1,6 +1,5 @@
 package com.tusur;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -23,12 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Feature("Баг-репорты")
 @Story("Проверка известных проблем")
 public class BugsTests extends BaseTest {
-
-    @BeforeEach
-    void openTestPage() {
-        driver.get("https://do.tusur.ru/qa-test2/");
-        System.out.println("Открыта вкладка для теста: " + driver.getWindowHandle());
-    }
 
     @Test
     @Description("Тест проверяет двойное нажатие по кнопке 'Очистить'")
