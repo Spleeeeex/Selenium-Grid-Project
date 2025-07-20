@@ -88,7 +88,7 @@ import java.util.Date;
 
             // Прикрепляем скриншоты к Allure отчету
             try (FileInputStream fis = new FileInputStream(screenshot)) {
-                Allure.addAttachment("Скриншот после теста", "image/png", fis, ".png");
+                Allure.addAttachment("Скриншот после теста" + testInfo.getDisplayName(), "image/png", fis, ".png");
             }
 
             // Пауза 2 секунды
